@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:    
 
 jobs:
   build:
@@ -23,7 +24,7 @@ jobs:
       - name: Upload Artifacct for deployment job
         uses: actions/upload-artifact@v2
         with:
-          name: springboot-example
+          name: springboot-jar
           path: ${{ github.workspace }}/build/libs/*[!plain].jar
 
   deploy:
@@ -33,7 +34,7 @@ jobs:
       - name: Download Artifact from build job
         uses: actions/download-artifact@v2
         with:
-          name: springboot-example
+          name: springboot-jar
       - name: Deploy to Azure App Service
         uses: azure/webapps-deploy@v2
         with:
