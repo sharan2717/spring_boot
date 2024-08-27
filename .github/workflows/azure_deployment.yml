@@ -22,6 +22,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+    - name: Azure Login
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
     - name: Deploy to Azure Web App
       uses: azure/cli@v2
       with:
