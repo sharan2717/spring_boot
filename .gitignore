@@ -1,6 +1,6 @@
 HELP.md
 .gradle
-build/
+# build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
@@ -35,3 +35,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+
+#### ignore build files except jars inside libs ###
+
+/build/*
+
+!/build/libs
