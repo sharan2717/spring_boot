@@ -34,7 +34,7 @@ jobs:
 
   
     - name: inside 
-      run: ls  /home/runner/work/spring_boot/spring_boot
+      run: ls -al  /home/runner/work/spring_boot/spring_boot
 
 
     - name: List JAR files
