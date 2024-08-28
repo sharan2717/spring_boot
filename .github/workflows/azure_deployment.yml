@@ -26,6 +26,13 @@ jobs:
       uses: azure/login@v2
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: List root directory
+      run: ls -al /
+  
+    - name: List home directory
+      run: ls -al /home/runner
+
+
 
     - name: List JAR files
       run: ls -al ${{ github.workspace }}
