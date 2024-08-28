@@ -38,10 +38,10 @@ jobs:
       with:
         azcliversion: latest
         inlineScript: |
-          az webapp deploy source config-zip --name springboot-demo --resource-group springboot-demo_group --type jar --src-path ./build/libs/spring_boot-0.0.1-SNAPSHOT.jar
+          az webapp deploy --name springboot-demo --resource-group springboot-demo_group --type jar --src-path ./build/libs/*[!plain].jar
     - name: Restart Azure Web App
       uses: azure/cli@v2
       with:
         azcliversion: latest
         inlineScript: |
-          az webapp restart --name springboot --resource-group springboot-demo_group
+          az webapp restart --name springboot-demo --resource-group springboot-demo_group
