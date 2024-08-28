@@ -10,6 +10,12 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v3
 
+      - name: Set up Snyk
+        uses: snyk/actions/setup@v1
+        with:
+         version: 'latest'
+
+         
       - name: Authenticate Snyk
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
