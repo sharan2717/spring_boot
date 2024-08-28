@@ -9,53 +9,33 @@ jobs:
     steps:
       - name: Checkout Source
         uses: actions/checkout@v3
-      - name: List root directory
-        run: ls -al /
-    
-      - name: List home directory
-        run: ls -al /home/runner
-  
-    
-      - name: inside 
-        run: ls -al  /home/runner/work/spring_boot/spring_boot
-      - name: List root of workspace
-        run: ls -al /home/runner/work
-      
-      - name: List root of workspaced
-        run: ls -al /home/runner/work/spring_boot
-      
-      - name: List top-level repository directory
-        run: ls -al ${{ github.workspace }}
-      
-      - name: List all files recursively
-        run: find ${{ github.workspace }} -type f
-      
-      - name: List JAR files
-        run: ls -al ${{ github.workspace }}
-  
-      - name: Get JAR File Path
-        id: get-jar
-        run: echo "JAR_PATH=$(ls ./build/libs/*[!plain].jar)" >> $GITHUB_ENV
-  
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-    - name: Azure Login
-      uses: azure/login@v2
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+      - name: Build Project
+        run: ./gradlew build
 
 
-    - name: Deploy to Azure Web App
-      uses: azure/cli@v2
-      with:
-        azcliversion: latest
-        inlineScript: |
-          az webapp deploy --name springboot-demo --resource-group springboot-demo_group --type jar --src-path ./build/libs/*[!plain].jar
-    - name: Restart Azure Web App
-      uses: azure/cli@v2
-      with:
-        azcliversion: latest
-        inlineScript: |
-          az webapp restart --name springboot-demo --resource-group springboot-demo_group
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+  
+      - name: Deploy to Azure Web App
+        uses: azure/cli@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az webapp deploy --name springboot-demo --resource-group springboot-demo_group --type jar --src-path ./build/libs/*[!plain].jar
+      - name: Restart Azure Web App
+        uses: azure/cli@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az webapp restart --name springboot-demo --resource-group springboot-demo_group        
+
+
