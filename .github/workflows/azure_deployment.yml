@@ -38,6 +38,9 @@ jobs:
     - name: List root of workspace
       run: ls -al /home/runner/work
     
+    - name: List root of workspaced
+      run: ls -al /home/runner/work/spring_boot
+    
     - name: List top-level repository directory
       run: ls -al ${{ github.workspace }}
     
