@@ -35,7 +35,15 @@ jobs:
   
     - name: inside 
       run: ls -al  /home/runner/work/spring_boot/spring_boot
-
+    - name: List root of workspace
+      run: ls -al /home/runner/work
+    
+    - name: List top-level repository directory
+      run: ls -al ${{ github.workspace }}
+    
+    - name: List all files recursively
+      run: find ${{ github.workspace }} -type f
+    
 
     - name: List JAR files
       run: ls -al ${{ github.workspace }}
