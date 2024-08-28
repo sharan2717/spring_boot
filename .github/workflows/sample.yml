@@ -1,4 +1,4 @@
-name: Deploy App 
+name: sample
 
 on:
   workflow_dispatch:    
@@ -43,13 +43,13 @@ jobs:
   
       - name: List top-level repository directory
         run: ls -al ${{ github.workspace }}    
-        
+
       - name: Deploy to Azure Web App
         uses: azure/cli@v2
         with:
           azcliversion: latest
           inlineScript: |
-            az webapp deploy --name springboot-demo --resource-group springboot-demo_group --type jar --src-path ./build/libs/*[!plain].jar
+            az webapp deploy --name springboot-demo --resource-group springboot-demo_group --type jar --src-path ${{ github.workspace}}/spring_boot-0.0.1-SNAPSHOT.jar
       - name: Restart Azure Web App
         uses: azure/cli@v2
         with:
