@@ -28,14 +28,13 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: List JAR files
-      run: ls -al ${{ github.workspace }}/build/libs
+      run: ls -al ${{ github.workspace }}
 
 
 
     - name: Get JAR File Path
       id: get-jar
       run: echo "JAR_PATH=$(ls ./build/libs/*[!plain].jar)" >> $GITHUB_ENV
-
 
 
     - name: Deploy to Azure Web App
