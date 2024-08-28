@@ -51,4 +51,4 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-              az webapp restart --resource-group springboot-demo_group --name springboot 
+              az webapp restart --resource-group springboot-demo_group --name springboot-demo 
