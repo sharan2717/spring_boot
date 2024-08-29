@@ -1,4 +1,4 @@
-name: sample
+name: Azure deployment
 
 on:
   workflow_dispatch:    
@@ -15,19 +15,18 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+          
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
+        
       - name: Build Project
         run: ./gradlew build
 
-
-      - name: Upload Artifacct for deployment job
+      - name: Upload Artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: springboot-jar
           path: ${{ github.workspace }}/build/libs/*[!plain].jar
-######
-
 
   deploy:
     runs-on: ubuntu-latest
@@ -37,20 +36,19 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: springboot-jar
+          
       - name: Azure Login
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-  
-      - name: List top-level repository directory
-        run: ls -al ${{ github.workspace }}    
-
+          
       - name: Deploy to Azure Web App
         uses: azure/cli@v2
         with:
           azcliversion: latest
           inlineScript: |
             az webapp deploy --name springboot-demo --resource-group springboot-demo_group --type jar --src-path ${{ github.workspace}}/spring_boot-0.0.1-SNAPSHOT.jar
+    
       - name: Restart Azure Web App
         uses: azure/cli@v2
         with:
